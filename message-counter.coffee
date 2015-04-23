@@ -56,6 +56,7 @@ maybePrint = () ->
   if ++printCount >= 500
     printCount = 0
     console.log "seen #{messagesSeen} messages"
+    print()
 
 startTime = new Date()
 process.on 'SIGINT', () ->
