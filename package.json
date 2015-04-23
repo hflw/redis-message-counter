@@ -1,0 +1,15 @@
+{
+  "name": "redis-message-counter",
+  "version": "1.0.0",
+  "description": "Count redis pubsub messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "hiredis": "^0.3.0",
+    "redis": "^0.12.1"
+  }
+}
