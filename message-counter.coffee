@@ -39,10 +39,10 @@ getBiggestKeyLength = (obj) ->
 
 print = () ->
   maxLength = getBiggestKeyLength counters
-  console.log line(maxLength + 14)
+  console.log line(maxLength + 18)
   for key, value of counters
     console.log "#{pad(key, maxLength)}   #{pad(value+'', 5)}  #{Math.round(sizes[key]/1024)} kB"
-  console.log line(maxLength + 14)
+  console.log line(maxLength + 18)
 
 client.psubscribe '*'
 messagesSeen = 0
