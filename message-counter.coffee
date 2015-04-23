@@ -1,15 +1,19 @@
 redis = require 'redis'
+sizeof = require 'object-sizeof'
 
 client = redis.createClient(process.argv[3] || 6379, process.argv[2] || '127.0.0.1')
 console.log 'running...'
 
 counters = {}
+sizes = {}
 
-increment = (index) ->
+increment = (index, message) ->
   if !counters[index]
     counters[index] = 1
+    sizes[index] = sizeof(message)
   else
     counters[index]++
+    sizes[index] += sizeof(index)
 
 getDocumentCollection = (str) ->
   str.substring 0, str.indexOf('.')
@@ -33,21 +37,20 @@ getBiggestKeyLength = (obj) ->
       length = len
   length
 
-
 print = () ->
   maxLength = getBiggestKeyLength counters
-  console.log line(maxLength + 7)
+  console.log line(maxLength + 14)
   for key, value of counters
-    console.log "#{pad(key, maxLength)}   #{value}"
-  console.log line(maxLength + 7)
+    console.log "#{pad(key, maxLength)}   #{pad(value, 5)}  #{Math.round(sizes[key]/1024)} kB"
+  console.log line(maxLength + 14)
 
 client.psubscribe '*'
 messagesSeen = 0
 client.on 'pmessage', (pattern, channel, message) ->
   if channel.indexOf('.') == -1
-    increment channel
+    increment channel, message
   else
-    increment "#{getDocumentCollection(channel)} (document)"
+    increment "#{getDocumentCollection(channel)} (document)", message
   messagesSeen++
   maybePrint()
 
