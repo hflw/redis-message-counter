@@ -53,7 +53,7 @@ client.on 'pmessage', (pattern, channel, message) ->
 
 printCount = 0
 maybePrint = () ->
-  if ++printCount >= 1000
+  if ++printCount >= 500
     printCount = 0
     console.log "seen #{messagesSeen} messages"
 
