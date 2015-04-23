@@ -60,7 +60,7 @@ maybePrint = () ->
 startTime = new Date()
 process.on 'SIGINT', () ->
   endTime = new Date()
-  client.unsubscribe()
+  client.punsubscribe()
   client.end()
   # final stats
   print()
